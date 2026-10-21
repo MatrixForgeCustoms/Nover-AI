@@ -1,0 +1,27 @@
+# Build output
+bin/
+obj/
+dist/
+publish/
+*.user
+.vs/
+.vscode/
+
+# Local data: never upload
+nover_nutzer.json
+nover_daten.json
+nover_sitzungen.json
+*.log
+*.tmp
+
+# Credentials and certificates: never upload
+.env
+*.pfx
+*.p12
+*.key
+*secret*
+*.snk
+
+# Windows
+Thumbs.db
+desktop.ini

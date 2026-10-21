@@ -1,0 +1,86 @@
+:root {
+  --bg: #0a0a0a; --seite: #121212; --karte: #1c1c1c; --rand: #2a2a2a;
+  --text: #ededed; --grau: #8a8a8a; --akzent: #3fa9f5; --gruen: #34d399; --rot: #f87171;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; height: 100vh; background: var(--bg); color: var(--text);
+       font-family: "Segoe UI", system-ui, sans-serif; overflow: hidden; }
+button { font: inherit; cursor: pointer; border: 0; }
+input { font: inherit; background: var(--seite); color: var(--text); border: 1px solid var(--rand);
+        border-radius: 10px; padding: 11px 14px; outline: none; }
+input:focus { border-color: var(--akzent); }
+.grau { color: var(--grau); font-size: 13px; }
+.center { text-align: center; margin: 0; }
+.akzent { color: var(--akzent); font-size: 13px; }
+.fett { font-weight: 600; }
+.primaer { background: var(--akzent); color: #000; border-radius: 10px; padding: 11px 16px; font-weight: 600; }
+.primaer:disabled { opacity: .5; cursor: default; }
+
+.login { height: 100vh; display: flex; align-items: center; justify-content: center; }
+.login .karte { background: var(--karte); border: 1px solid var(--rand); border-radius: 16px;
+                padding: 34px; width: 350px; display: flex; flex-direction: column; gap: 12px; }
+.logo { font-size: 22px; font-weight: 800; color: var(--akzent); letter-spacing: 3px; text-align: center; }
+.umschalter { display: flex; background: var(--seite); border-radius: 10px; padding: 4px; }
+.umschalter button { flex: 1; background: none; color: var(--grau); padding: 8px; border-radius: 8px; }
+.umschalter .aktiv { background: var(--karte); color: var(--akzent); }
+.meldung { color: var(--rot); min-height: 18px; font-size: 13px; margin: 0; text-align: center; }
+
+#app { display: flex; height: 100vh; }
+.seite { width: 240px; background: var(--seite); display: flex; flex-direction: column; padding: 18px 14px; gap: 6px; }
+.marke { font-weight: 800; letter-spacing: 3px; color: var(--akzent); padding: 6px 8px 14px; }
+.menu { background: none; color: var(--text); text-align: left; padding: 10px 12px; border-radius: 10px; }
+.menu:hover { background: var(--karte); }
+.menu.aktiv { background: var(--karte); color: var(--akzent); }
+.label { margin: 18px 8px 6px; }
+.letzte { display: flex; flex-direction: column; gap: 4px; overflow: auto; flex: 1; }
+.letzte-item { font-size: 13px; padding: 6px 8px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.letzte-item:hover { background: var(--karte); }
+.unten { border-top: 1px solid var(--rand); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+.link { background: none; color: var(--grau); text-align: left; padding: 6px 0; }
+
+main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+header { padding: 18px 40px 0; }
+h1 { font-size: 20px; margin: 0; }
+h3 { margin: 18px 0 10px; font-size: 15px; }
+.ansicht { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+.verlauf { flex: 1; overflow: auto; padding: 20px 40px; display: flex; flex-direction: column; gap: 14px; }
+.msg { max-width: 78%; }
+.msg.du { align-self: flex-end; background: #202020; border-radius: 16px 16px 4px 16px; padding: 10px 14px; }
+.msg.nover { align-self: flex-start; }
+.kopf { font-size: 12px; color: var(--grau); margin-bottom: 4px; }
+.msg.nover .kopf { color: var(--akzent); }
+.text { white-space: pre-wrap; line-height: 1.55; font-size: 15px; }
+.bewertung { display: flex; gap: 6px; margin-top: 6px; color: var(--grau); font-size: 13px; }
+.icon { background: none; color: var(--text); font-size: 15px; padding: 2px 6px; border-radius: 6px; }
+.icon:hover { background: var(--karte); }
+
+.eingabe-bereich { padding: 0 40px 24px; }
+.eingabe { background: var(--karte); border: 1px solid var(--rand); border-radius: 18px; padding: 12px;
+           display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.eingabe input { flex: 1; min-width: 200px; border: 0; background: transparent; padding: 8px; }
+.modus { display: flex; gap: 6px; }
+.chip { background: var(--seite); color: var(--grau); border-radius: 999px; padding: 6px 12px; font-size: 12px; }
+.chip.aktiv { background: var(--akzent); color: #000; }
+
+#ansicht-dash { padding: 20px 40px; overflow: auto; }
+.karten { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.karte-klein { background: var(--karte); border-radius: 14px; padding: 16px 20px; min-width: 160px;
+               display: flex; flex-direction: column; gap: 4px; }
+.karte-klein span { color: var(--grau); font-size: 12px; }
+.karte-klein b { font-size: 26px; }
+.balken { display: flex; gap: 10px; height: 180px; align-items: flex-end; background: var(--karte);
+          border-radius: 14px; padding: 16px; }
+.spalte { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.stab { width: 100%; background: var(--akzent); border-radius: 8px 8px 3px 3px; min-height: 4px; transition: height .4s; }
+.tag { font-size: 11px; color: var(--grau); }
+.liste { background: var(--karte); border-radius: 14px; padding: 12px 28px; margin: 0; }
+.liste li { padding: 4px 0; }
+
+.logo-bild { width: 150px; display: block; margin: 0 auto 4px; }
+.marke-bild { width: 64px; display: block; margin: 6px 8px 14px; }
+
+.rueckfrage { color: var(--text); font-size: 13px; width: 100%; }
+textarea { width: 100%; font: inherit; background: var(--seite); color: var(--text);
+           border: 1px solid var(--rand); border-radius: 10px; padding: 8px; resize: vertical; }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nover</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="login" class="login">
+  <div class="karte">
+    <img class="logo-bild" src="logo.png" alt="Nover">
+    <p class="grau center">Dein Helfer für Roblox und alles andere</p>
+    <div class="umschalter">
+      <button id="tab-anmelden" class="aktiv">Anmelden</button>
+      <button id="tab-registrieren">Registrieren</button>
+    </div>
+    <input id="name" placeholder="Name" autocomplete="username">
+    <input id="passwort" type="password" placeholder="Passwort" autocomplete="current-password">
+    <label class="grau"><input type="checkbox" id="merken" checked> Angemeldet bleiben (30 Tage)</label>
+    <button id="absenden" class="primaer">Anmelden</button>
+    <p id="login-meldung" class="meldung"></p>
+  </div>
+</section>
+
+<section id="app" hidden>
+  <aside class="seite">
+    <img class="marke-bild" src="logo.png" alt="Nover">
+    <button id="neu" class="menu">+ Neues Gespräch</button>
+    <button id="nav-chat" class="menu aktiv">Chat</button>
+    <button id="nav-dash" class="menu">Dashboard</button>
+    <div class="grau label">Letzte Fragen</div>
+    <div id="letzte" class="letzte"></div>
+    <div class="unten">
+      <div id="profil" class="fett"></div>
+      <div id="tokens" class="akzent"></div>
+      <button id="abmelden" class="link">Abmelden</button>
+    </div>
+  </aside>
+
+  <main>
+    <header><h1 id="titel">Chat</h1></header>
+
+    <div id="ansicht-chat" class="ansicht">
+      <div id="verlauf" class="verlauf"></div>
+      <div class="eingabe-bereich">
+        <div class="eingabe">
+          <input id="frage" placeholder="Frag Nover etwas oder tippe /hilfe" autocomplete="off">
+          <div class="modus">
+            <button id="m-schnell" class="chip aktiv">Nover · 25</button>
+            <button id="m-komplex" class="chip">Roms 1.3 · 75</button>
+          </div>
+          <button id="senden" class="primaer">Senden</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="ansicht-dash" class="ansicht" hidden>
+      <div class="karten">
+        <div class="karte-klein"><span>Tokens</span><b id="k-tokens">0</b></div>
+        <div class="karte-klein"><span>Gespräche</span><b id="k-gespraeche">0</b></div>
+        <div class="karte-klein"><span>Zufrieden</span><b id="k-zufrieden">–</b></div>
+        <div class="karte-klein"><span>Schwere Fragen</span><b id="k-schwer">0%</b></div>
+      </div>
+      <h3>Letzte 7 Tage</h3>
+      <div id="balken" class="balken"></div>
+      <h3>Letzte Fragen</h3>
+      <ul id="liste" class="liste"></ul>
+    </div>
+  </main>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
