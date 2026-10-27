@@ -1,5 +1,5 @@
-; Nover Setup - Inno Setup 6 Skript
-; Wird mit build_installer.bat erzeugt.
+; Nover Setup - Inno Setup 6
+; Wizard: 1 Language | 2 Install location | 3 Terms (accept/decline) | 4 AI training (yes/no) | 5 Options | 6 Install and finish
 
 #define MyAppName "Nover"
 #define MyAppVersion "1.0.0"
@@ -25,16 +25,18 @@ WizardStyle=modern
 PrivilegesRequired=admin
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
-ShowLanguageDialog=auto
+ShowLanguageDialog=yes
 
 [Languages]
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "english"; MessagesFile: "compiler:Default.isl"
+; Step 1: Language. Terms are shown in the chosen language.
+Name: "german"; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "terms_de.txt"
+Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "terms_en.txt"
 
 [Messages]
 german.WelcomeLabel2=Dieser Assistent installiert [name/ver] auf deinem Computer.%n%nDeine Konten, Gespräche und Tokens liegen in %APPDATA%\Nover und bleiben beim Installieren und Deinstallieren erhalten.
 
 [Tasks]
+; Step 5: Options
 Name: "desktopicon"; Description: "Verknüpfung auf dem Desktop erstellen"; GroupDescription: "Verknüpfungen:"; Flags: checkedonce
 Name: "startmenu"; Description: "Im Startmenü anlegen"; GroupDescription: "Verknüpfungen:"; Flags: checkedonce
 Name: "autostart"; Description: "Nover beim Windows-Start automatisch öffnen"; GroupDescription: "Optionen:"; Flags: unchecked
@@ -51,35 +53,56 @@ Name: "{group}\{#MyAppName} deinstallieren"; Filename: "{uninstallexe}"; Tasks: 
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExe}"; IconFilename: "{app}\nover.ico"; Tasks: desktopicon
 
 [Registry]
-; Autostart beim Windows-Start
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "Nover"; ValueData: """{app}\{#MyAppExe}"""; Flags: uninsdeletevalue; Tasks: autostart
-; Immer mit Administratorrechten starten (Kompatibilitaetsflag des Programms)
 Root: HKCU; Subkey: "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; ValueType: string; ValueName: "{app}\{#MyAppExe}"; ValueData: "~ RUNASADMIN"; Flags: uninsdeletevalue; Tasks: runasadmin
 
 [Run]
+; Step 6: Finish and start
 Filename: "{app}\{#MyAppExe}"; Description: "Nover jetzt starten"; Flags: nowait postinstall skipifsilent
 
 [Code]
 var
   OrtSeite: TInputOptionWizardPage;
+  KiSeite: TInputOptionWizardPage;
 
-// Zusatzseite: 64-Bit-Programmordner oder x86-Programmordner
+// Texte je nach Sprache
+function T(de, en: String): String;
+begin
+  if ActiveLanguage = 'german' then Result := de else Result := en;
+end;
+
 procedure InitializeWizard;
 begin
+  // Step 2: Install location (after Welcome)
   OrtSeite := CreateInputOptionPage(wpWelcome,
     T('Installationsort', 'Install location'),
     T('Wo soll Nover installiert werden?', 'Where should Nover be installed?'),
-    T('Die App selbst ist 64-Bit. Der x86-Ordner ist nur eine Ablage, falls du ihn ausdrücklich brauchst.',
-      'The app itself is 64-bit. The x86 folder is only an alternative location if you explicitly need it.'),
+    T('Die App selbst ist 64-Bit. Wähle einen Ordner oder "Anderer Ordner" für eine eigene Auswahl.',
+      'The app itself is 64-bit. Choose a folder, or "Other folder" to pick your own.'),
     True, False);
   OrtSeite.Add(T('Programme (64-Bit, empfohlen)  -  C:\Program Files\Nover',
                  'Program Files (64-bit, recommended)  -  C:\Program Files\Nover'));
   OrtSeite.Add(T('Programme (x86)  -  C:\Program Files (x86)\Nover',
                  'Program Files (x86)  -  C:\Program Files (x86)\Nover'));
+  OrtSeite.Add(T('Anderer Ordner (im nächsten Schritt wählen)',
+                 'Other folder (choose on the next page)'));
   OrtSeite.Values[0] := True;
+
+  // Step 4: AI training consent (after Terms)
+  KiSeite := CreateInputOptionPage(wpLicense,
+    T('KI-Verbesserung', 'AI improvement'),
+    T('Darf Nover deine Eingaben nutzen, um die KI zu verbessern?',
+      'May Nover use your inputs to improve the AI?'),
+    T('Du kannst das später ändern. Deine Entscheidung wird gespeichert.',
+      'You can change this later. Your choice is saved.'),
+    True, False);
+  KiSeite.Add(T('Ja, meine Eingaben dürfen zur Verbesserung genutzt werden',
+                'Yes, my inputs may be used to improve the AI'));
+  KiSeite.Add(T('Nein, meine Eingaben nicht verwenden',
+                'No, do not use my inputs'));
+  KiSeite.Values[1] := True;
 end;
 
-// Ordner in der Auswahl setzen, bevor die Ordnerseite erscheint
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   Result := True;
@@ -87,8 +110,21 @@ begin
   begin
     if OrtSeite.Values[0] then
       WizardForm.DirEdit.Text := ExpandConstant('{commonpf64}\Nover')
-    else
+    else if OrtSeite.Values[1] then
       WizardForm.DirEdit.Text := ExpandConstant('{commonpf32}\Nover');
+    // Option 3: Ordner auf der Ordner-Seite waehlen
+  end;
+end;
+
+// Speichert die KI-Entscheidung in der Registry
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssPostInstall then
+  begin
+    if KiSeite.Values[0] then
+      RegWriteStringValue(HKCU, 'Software\Nover', 'AiTrainingConsent', 'yes')
+    else
+      RegWriteStringValue(HKCU, 'Software\Nover', 'AiTrainingConsent', 'no');
   end;
 end;
 
@@ -100,12 +136,6 @@ begin
   Result :=
     RegQueryStringValue(HKLM, 'SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}', 'pv', Version) or
     RegQueryStringValue(HKCU, 'Software\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}', 'pv', Version);
-end;
-
-// Texte passend zur gewaehlten Setup-Sprache (automatisch aus Windows)
-function T(de, en: String): String;
-begin
-  if ActiveLanguage = 'german' then Result := de else Result := en;
 end;
 
 function InitializeSetup(): Boolean;
@@ -120,7 +150,7 @@ begin
              'The installation continues anyway.'), mbInformation, MB_OK);
 end;
 
-// Deinstallation: Programm wird entfernt, Daten nur nach Rueckfrage.
+// Deinstallation: Daten nur nach Rueckfrage loeschen
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   DatenOrdner: String;

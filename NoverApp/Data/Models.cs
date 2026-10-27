@@ -10,6 +10,8 @@ public class UserRecord
     public string Hash { get; set; } = "";
     public string Rolle { get; set; } = "nutzer";
     public int Tokens { get; set; }
+    public string Provider { get; set; } = "";
+    public string Email { get; set; } = "";
 
     [JsonPropertyName("bonus_tag")]
     public string BonusTag { get; set; } = "";

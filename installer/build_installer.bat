@@ -15,6 +15,7 @@ if errorlevel 1 (
 echo [2/2] Building the setup ...
 set ISCC="%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe"
 if not exist %ISCC% set ISCC="%ProgramFiles%\Inno Setup 6\ISCC.exe"
+if not exist %ISCC% set ISCC="%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe"
 if not exist %ISCC% (
     echo Inno Setup 6 was not found. Please install it.
     pause

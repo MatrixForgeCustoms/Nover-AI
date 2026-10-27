@@ -84,3 +84,8 @@ h3 { margin: 18px 0 10px; font-size: 15px; }
 .rueckfrage { color: var(--text); font-size: 13px; width: 100%; }
 textarea { width: 100%; font: inherit; background: var(--seite); color: var(--text);
            border: 1px solid var(--rand); border-radius: 10px; padding: 8px; resize: vertical; }
+
+.trenner { text-align: center; color: var(--grau); font-size: 12px; }
+.oauth { display: block; text-align: center; background: var(--seite); color: var(--text);
+         border: 1px solid var(--rand); border-radius: 10px; padding: 10px; text-decoration: none; }
+.oauth:hover { border-color: var(--akzent); }

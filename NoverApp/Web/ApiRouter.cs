@@ -4,11 +4,16 @@ using NoverApp.Core;
 namespace NoverApp.Web;
 
 // Ordnet jede Route einem Handler zu. Geschuetzte Routen brauchen ein gueltiges Token.
-public class ApiRouter(AuthHandler auth, ChatHandler chat, AdminHandler admin)
+public class ApiRouter(AuthHandler auth, ChatHandler chat, AdminHandler admin, OAuthHandler oauth)
 {
     public async Task HandleAsync(HttpListenerContext ctx)
     {
         var req = ctx.Request;
+        if (req.Url!.AbsolutePath.StartsWith("/api/oauth/", StringComparison.Ordinal))
+        {
+            await oauth.HandleAsync(ctx);
+            return;
+        }
         var pfad = req.Url!.AbsolutePath;
         var token = Json.Bearer(req);
         var name = token is null ? null : SessionStore.Validate(token);

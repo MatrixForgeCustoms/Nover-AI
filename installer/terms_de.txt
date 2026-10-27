@@ -1,0 +1,32 @@
+NUTZUNGSBEDINGUNGEN UND DATENSCHUTZ - NOVER
+
+Stand: 2026. Bitte vor der Veröffentlichung von einer rechtskundigen Person prüfen lassen.
+
+1. Geltungsbereich
+Diese Bedingungen gelten für die Nutzung der Software Nover (nachfolgend "Software").
+
+2. Nutzung
+Die Software ist für den privaten Gebrauch gedacht. Du bist für die Inhalte verantwortlich, die du eingibst.
+Du darfst die Software nicht für rechtswidrige Zwecke einsetzen.
+
+3. Konten und Zugangsdaten
+Passwörter werden nur als Hash gespeichert. API-Schlüssel gehören ausschließlich in deine eigenen Umgebungsvariablen.
+Du bist selbst dafür verantwortlich, deine Zugangsdaten geheim zu halten.
+
+4. Drittanbieter-KI
+Deine Anfragen werden zur Beantwortung an die gewählten KI-Anbieter (z.B. Google Gemini, Groq) gesendet.
+Für deren Verarbeitung gelten die Bedingungen des jeweiligen Anbieters.
+
+5. Datenschutz
+- Konten, Gespräche, Sitzungen und Protokolle werden lokal auf deinem Computer im Ordner %APPDATA%\Nover gespeichert.
+- Die Software sendet keine Daten an den Entwickler.
+- Die Auswahl zum Verbessern der KI (Schritt im Setup) wird lokal gespeichert. Sie wird nur wirksam, wenn eine Funktion dafür vorhanden und aktiviert ist.
+- Du kannst deine Daten jederzeit löschen, indem du den Ordner %APPDATA%\Nover entfernst.
+
+6. Haftung
+Die Software wird "wie besehen" bereitgestellt. KI-Antworten können fehlerhaft sein. Prüfe wichtige Informationen selbst.
+
+7. Änderungen
+Diese Bedingungen können geändert werden. Die jeweils aktuelle Fassung gilt.
+
+Mit "Ich akzeptiere" bestätigst du, dass du diese Bedingungen gelesen hast und ihnen zustimmst.

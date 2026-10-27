@@ -115,4 +115,21 @@ public class UserService(UserRepository repo)
             return true;
         });
     }
+
+    // Legt ein Konto fuer Google/GitHub an oder meldet das vorhandene an. Gibt den Kontonamen zurueck.
+    public string OAuthAnmelden(string provider, string id, string email)
+    {
+        var name = $"{provider}-{id}";
+        repo.Modify(d =>
+        {
+            if (!d.ContainsKey(name))
+            {
+                d[name] = new UserRecord { Name = name, Rolle = "nutzer", Provider = provider, Email = email };
+                Logger.Info($"Konto ueber {provider} erstellt: {name}");
+            }
+            return true;
+        });
+        Logger.Info($"Angemeldet ueber {provider}: {name}");
+        return name;
+    }
 }

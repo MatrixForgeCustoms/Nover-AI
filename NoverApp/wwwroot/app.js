@@ -276,5 +276,13 @@ $("nav-chat").onclick = () => zeigeAnsicht("chat");
 $("nav-dash").onclick = () => zeigeAnsicht("dash");
 $("abmelden").onclick = abmelden;
 
+// Token nach Google/GitHub-Anmeldung aus der Adresse uebernehmen
+const parameter = new URLSearchParams(location.search);
+if (parameter.get("token")) {
+  token = parameter.get("token");
+  localStorage.setItem("nover_token", token);
+  history.replaceState(null, "", "/");
+}
+
 setLoginModus("anmelden");
 if (token) starteApp();

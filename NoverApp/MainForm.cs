@@ -1,3 +1,4 @@
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 using NoverApp.AI;
 using NoverApp.Config;
@@ -30,7 +31,13 @@ public class MainForm : Form
     {
         _server = Baue();
         _server.Start();
-        await _web.EnsureCoreWebView2Async();
+
+        // WebView2 braucht einen beschreibbaren Ordner. Program Files ist dafuer nicht erlaubt.
+        var datenOrdner = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Nover", "WebView2");
+        Directory.CreateDirectory(datenOrdner);
+        var umgebung = await CoreWebView2Environment.CreateAsync(null, datenOrdner);
+        await _web.EnsureCoreWebView2Async(umgebung);
         _web.CoreWebView2.Settings.AreDevToolsEnabled = false;
         _web.Source = new Uri($"http://localhost:{AppSettings.Port}/");
     }
@@ -46,7 +53,8 @@ public class MainForm : Form
         var router = new ApiRouter(
             new AuthHandler(users),
             new ChatHandler(users, chats, chatRepo),
-            new AdminHandler(new CommandParser(users, chats)));
+            new AdminHandler(new CommandParser(users, chats)),
+            new OAuthHandler(new OAuthService(), users));
         return new ApiServer(AppSettings.Port, router);
     }
 }

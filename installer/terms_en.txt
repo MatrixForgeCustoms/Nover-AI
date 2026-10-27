@@ -1,0 +1,32 @@
+TERMS OF USE AND PRIVACY - NOVER
+
+Last updated: 2026. Please have these terms reviewed by a qualified legal professional before publishing.
+
+1. Scope
+These terms apply to the use of the software Nover (the "Software").
+
+2. Use
+The Software is intended for personal use. You are responsible for the content you enter.
+You may not use the Software for unlawful purposes.
+
+3. Accounts and credentials
+Passwords are stored only as hashes. API keys belong only in your own environment variables.
+You are responsible for keeping your credentials secret.
+
+4. Third-party AI providers
+Your requests are sent to the AI provider you use (e.g. Google Gemini, Groq) to generate answers.
+The terms of that provider apply to their processing.
+
+5. Privacy
+- Accounts, chats, sessions, and logs are stored locally on your computer in %APPDATA%\Nover.
+- The Software does not send data to the developer.
+- The choice about improving AI (setup step) is stored locally. It only has an effect if such a feature exists and is enabled.
+- You can delete your data at any time by removing the %APPDATA%\Nover folder.
+
+6. Liability
+The Software is provided "as is". AI answers may be wrong. Check important information yourself.
+
+7. Changes
+These terms may change. The current version applies.
+
+By choosing "I accept" you confirm that you have read these terms and agree to them.
